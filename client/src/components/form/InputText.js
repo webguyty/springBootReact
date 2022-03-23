@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { letters } from '../../utils/validation'
 
 const InputText = ({label, nameText, id, formState, handleChange, cn, placeholder, setNotification}) => {
 
   // Validate to make sure only letters are entered
   // If it fails validation set notification error
   useEffect(() => {
-    if (/[^a-zA-Z]/.test(formState.fname) || /[^a-zA-Z]/.test(formState.lname)) {
+    if (!letters(formState.fname) || !letters(formState.lname)) {
       setNotification(prevState => ({...prevState,
         message: 'Names may only contain letters',
         display: true,
@@ -14,12 +15,12 @@ const InputText = ({label, nameText, id, formState, handleChange, cn, placeholde
         isError: true
       }))
     } else {
-      // setNotification(prevState => ({...prevState,
-      //   message: '',
-      //   display: false,
-      //   timer: false,
-      //   isError: false
-      // }))
+      setNotification(prevState => ({...prevState,
+        message: '',
+        display: false,
+        timer: false,
+        isError: false
+      }))
     }
   }, [formState])
   

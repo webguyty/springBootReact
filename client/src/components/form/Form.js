@@ -6,8 +6,10 @@ import InputCheckText from './InputCheckText'
 import InputSelect from './InputSelect'
 import SubmitBtn from '../SubmitBtn'
 import Notification from '../Notification'
+import * as validation from '../../utils/validation'
 
 const Form = () => {
+  const defaultSupervisor = 'Select...'
   const [formState, setFormState] = useState({
     fname: '',
     lname: '',
@@ -15,10 +17,10 @@ const Form = () => {
     phone: '',
     isEmail: false,
     isPhone: false,
-    supervisor: ''
+    supervisor: defaultSupervisor
   })
 
-  const [supervisorList, setSupervisorList] = useState(['Select...', 'two', 'three'])
+  const [supervisorList, setSupervisorList] = useState([defaultSupervisor, 'two', 'three'])
 
   // Notification state - display error or success
   const [notification, setNotification] = useState({
@@ -44,16 +46,15 @@ const Form = () => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    console.log(formState);
-    console.log(notification);
+
     // 
     // Validation
     // 
 
     if (notification.isError) return
 
-    // Make sure an email or phone is provided
-    if (!formState.fname && !formState.lname) {
+    // Make sure a first name and last name is provided
+    if (!formState.fname || !formState.lname) {
       setNotification(prevState => ({...prevState,
         message: 'Must include first name and last name',
         display: true,
@@ -76,7 +77,7 @@ const Form = () => {
 
     // Make sure a valid phone number if that is preference
     if (formState.isPhone) {
-      if (!/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(formState.phone)) {
+      if (!validation.email(formState.phone)) {
         setNotification(prevState => ({...prevState,
           message: 'Phone number must be 10 digits',
           display: true,
@@ -89,7 +90,7 @@ const Form = () => {
 
     // Make sure a valid phone number if that is preference
     if (formState.isEmail) {
-      if (!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(formState.email.toLowerCase())) {
+      if (!validation.email(formState.email)) {
         setNotification(prevState => ({...prevState,
           message: 'Email address must be valid',
           display: true,
@@ -98,6 +99,17 @@ const Form = () => {
         }))
         return
       }
+    }
+
+    // Make sure a supervisor is selected
+    if (formState.supervisor === 'Select...') {
+      setNotification(prevState => ({...prevState,
+        message: 'Please select a supervisor',
+        display: true,
+        timer: true,
+        isError: true
+      }))
+      return
     }
 
     // Delete uneeded fields from response
@@ -109,6 +121,8 @@ const Form = () => {
     // Succesful Submission
     // 
 
+  
+
     setNotification(prevState => ({...prevState,
       message: 'Thank you for filling out the notification form!',
       display: true,
@@ -116,15 +130,19 @@ const Form = () => {
       isError: false
     }))
 
-    setFormState({
-      fname: '',
-      lname: '',
-      email: '',
-      phone: '',
-      isEmail: false,
-      isPhone: false,
-      supervisor: ''
-    })
+    // Clear form state after 3 seconds
+    setTimeout(() => {
+      setFormState({
+          fname: '',
+          lname: '',
+          email: '',
+          phone: '',
+          isEmail: false,
+          isPhone: false,
+          supervisor: ''
+        })
+    }, 3000);
+
   }
 
   useEffect( () => {
