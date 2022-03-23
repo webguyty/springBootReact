@@ -1,0 +1,58 @@
+.notif{
+
+  &_header {
+    background-color: $color-secondary;
+    text-align: center;
+    padding: 1rem 0;
+    border-radius: 5px 5px 0 0;
+    
+  }
+
+  &_body {
+    padding: 3rem;
+    padding-top: 4rem;
+    background-color: rgb(150, 150, 150);
+    border-radius: 0 0 5px 5px;
+    position: relative;
+  }
+
+  & label {
+    margin-bottom: .5rem;
+  }
+}
+
+.notif_grid {
+  display: grid;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  &-2x {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.notif_preference {
+  margin-bottom: .5rem;
+  font-size: 1.3rem;
+}
+
+// Custom form inputs
+.notif_inputText {
+}
+
+.notif_inputCheckText {
+  // Check box and label div   
+  & > div {
+    display: flex;
+    line-height: 1.4rem;
+  }
+
+  & input[type=checkbox] {
+    margin-right: 1rem;
+  }
+}
+
+.notif_select {
+  width: 50%;
+  margin: auto;
+  margin-bottom: 2rem;
+}

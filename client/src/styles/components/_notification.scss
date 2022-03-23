@@ -1,0 +1,10 @@
+.notification {
+  position: absolute;
+  top: 1.5rem;
+  font-weight: bold;
+  color: rgb(0, 66, 0);
+  
+  &-error {
+    color: rgb(131, 0, 0);
+  }
+}

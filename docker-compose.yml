@@ -3,7 +3,25 @@ version: "3.0"
 services:
   spring-template:
     build: 
-      context: .
+      context: ./api
       dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
       - 8080:8080
+    # networks:
+    #   - backend
+    #   - frontend
+  client: 
+    depends_on:
+      - spring-template
+    build: 
+      context: ./client
+      dockerfile: Dockerfile
+      args: 
+        - REACT_APP_BASE_API_URL=$REACT_APP_BASE_API_URL
+    ports:
+      - 3000:3000
+      # - $REACT_APP_DOCKER_PORT:$REACT_APP_DOCKER_PORT
+    # networks:
+    #   - frontend
+    restart: unless-stopped
