@@ -1,6 +1,8 @@
 package io.lightfeather.springtemplate;
 import io.lightfeather.springtemplate.models.Supervisor;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -14,10 +16,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @RestController
-@RequestMapping(path = "/supervisors")
+@RequestMapping(path = "/api")
 public class SupervisorService {
   // Get all supervisors
   @GetMapping
+  @CrossOrigin(origins = "http://localhost:3000")
   public ResponseEntity<?> getSupervisors() {
     RestTemplate restTemplate = new RestTemplate();
 
@@ -31,7 +34,8 @@ public class SupervisorService {
 
   // Filter and sort supervisors
   // Filter out numerical jurisdictions and sort by jurisdiction and name
-  @RequestMapping(path = "/sorted")
+  @RequestMapping(path = "/supervisors")
+  @CrossOrigin(origins = "http://localhost:3000")
   public ResponseEntity<?> getSupervisorsSorted() {
     RestTemplate restTemplate = new RestTemplate();
 
@@ -86,5 +90,13 @@ public class SupervisorService {
     }
 
     return new ResponseEntity<>(supervisorsFormatted, HttpStatus.OK);
+  }
+
+  @RequestMapping(path = "/submit")
+  @PostMapping
+  @CrossOrigin(origins = "http://localhost:3000")
+  public ResponseEntity<?> submitNotification() {
+    System.out.println("hellow There");
+    return new ResponseEntity<>("Okay", HttpStatus.OK);
   }
 }

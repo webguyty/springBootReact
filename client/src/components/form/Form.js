@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-
+import config from '../../config'
 import Header3 from '../Header3'
 import InputText from './InputText'
 import InputCheckText from './InputCheckText'
@@ -20,7 +20,7 @@ const Form = () => {
     supervisor: defaultSupervisor
   })
 
-  const [supervisorList, setSupervisorList] = useState([defaultSupervisor, 'two', 'three'])
+  const [supervisorList, setSupervisorList] = useState([defaultSupervisor])
 
   // Notification state - display error or success
   const [notification, setNotification] = useState({
@@ -139,7 +139,7 @@ const Form = () => {
           phone: '',
           isEmail: false,
           isPhone: false,
-          supervisor: ''
+          supervisor: defaultSupervisor
         })
     }, 3000);
 
@@ -147,7 +147,17 @@ const Form = () => {
 
   // Get supervisors when page loads
   useEffect( () => {
-   console.log('Loaded');
+    const getSups = async () => {
+      let res = await fetch(`${config.baseAPIurl}/api/supervisors`)
+      let data = await res.json()
+      setSupervisorList([defaultSupervisor, ...data])
+    }
+
+    try {
+      getSups()
+    } catch (error) {
+      console.log(error);
+    }
   }, [])
   
   return (
