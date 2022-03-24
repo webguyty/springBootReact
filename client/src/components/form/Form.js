@@ -6,7 +6,7 @@ import InputCheckText from './InputCheckText'
 import InputSelect from './InputSelect'
 import SubmitBtn from '../SubmitBtn'
 import Notification from '../Notification'
-import * as validation from '../../utils/validation'
+import * as validation from '../../utls/validation'
 
 const Form = () => {
   const defaultSupervisor = 'Select...'
@@ -145,6 +145,7 @@ const Form = () => {
 
   }
 
+  // Get supervisors when page loads
   useEffect( () => {
    console.log('Loaded');
   }, [])

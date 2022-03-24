@@ -1,23 +1,6 @@
-import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 const InputCheckText = ({label, nameCheck, nameText, id, formState, handleChange, cn, placeholder, setNotification}) => {
-  // useEffect(() => {
-  //   // If preference is selected, make sure that is a valid entry
-  //   // const phoneRE = new RegExp('^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$')
-  //   if(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(formState.phone)) {
-  //     console.log('success');
-  //     // setNotification(prevState => ({...prevState,
-  //     //   message: 'Names may only contain letters',
-  //     //   display: true,
-  //     //   timer: false,
-  //     //   isError: true
-  //     // }))
-  //   } else {
-  //     console.log('bade');
-  //   }
-  // }, [formState])
-
   return (
     <div className={`inputText ${cn}`}>
       <div className='inputCheck'>

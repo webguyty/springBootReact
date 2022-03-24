@@ -1,5 +1,10 @@
-package io.lightfeather.springtemplate.supervisor;
+package io.lightfeather.springtemplate.models;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.ArrayList;
+import java.util.List;
 
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Supervisor {
   private String id;
   private String phone;
@@ -7,7 +12,11 @@ public class Supervisor {
   private String identificationNumber;
   private String firstName;
   private String lastName;
+ 
+  public Supervisor() {
 
+  }
+  
   public Supervisor(String id, String phone, String jurisdiction, String identificationNumber, String firstName, String lastName) {
     this.id = id;
     this.phone = phone;
@@ -58,7 +67,5 @@ public class Supervisor {
   public void setLastName(String lastName) {
     this.lastName = lastName;
   }
-
-
 
 }
