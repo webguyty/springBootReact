@@ -4,6 +4,7 @@
 Run the following commands:
 
 docker-compose build
+
 docker-compose up
 
 To view the notification web application navigate to http://localhost:9001
