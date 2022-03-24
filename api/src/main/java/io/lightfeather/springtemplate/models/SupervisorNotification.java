@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SupervisorNotification {
   private String email;
-  private String phone;
-  private String jurisdiction;
+  private String phoneNumber;
+  private String supervisor;
   private String firstName;
   private String lastName;
  
@@ -13,10 +13,10 @@ public class SupervisorNotification {
 
   }
   
-  public SupervisorNotification(String email, String phone, String jurisdiction, String firstName, String lastName) {
+  public SupervisorNotification(String email, String phoneNumber, String supervisor, String firstName, String lastName) {
     this.email = email;
-    this.phone = phone;
-    this.jurisdiction = jurisdiction;
+    this.phoneNumber = phoneNumber;
+    this.supervisor = supervisor;
     this.firstName = firstName;
     this.lastName = lastName;
   }
@@ -28,18 +28,18 @@ public class SupervisorNotification {
     this.email = email;
   }
 
-  public String getPhone() {
-    return phone;
+  public String getPhoneNumber() {
+    return phoneNumber;
   }
-  public void setPhone(String phone) {
-    this.phone = phone;
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
   }
 
-  public String getJurisdiction() {
-    return jurisdiction;
+  public String getSupervisor() {
+    return supervisor;
   }
-  public void setJurisdiction(String jurisdiction) {
-    this.jurisdiction = jurisdiction;
+  public void setSupervisor(String supervisor) {
+    this.supervisor = supervisor;
   }
 
   public String getFirstName() {
@@ -54,5 +54,13 @@ public class SupervisorNotification {
   }
   public void setLastName(String lastName) {
     this.lastName = lastName;
+  }
+
+  public String toString() {
+    return "First Name: " + getFirstName() +
+            "\nLastName: " + getLastName() +
+            "\nPhone number: " + getPhoneNumber() +
+            "\nEmail: " + getEmail() +
+            "\nSupervisor: " + getSupervisor();
   }
 }

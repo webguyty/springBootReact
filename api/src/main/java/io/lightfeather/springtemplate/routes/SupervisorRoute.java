@@ -1,7 +1,6 @@
 package io.lightfeather.springtemplate.routes;
 import io.lightfeather.springtemplate.models.Supervisor;
 import io.lightfeather.springtemplate.models.SupervisorNotification;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,9 +20,11 @@ import java.util.regex.Pattern;
 @RestController
 @RequestMapping(path = "/api")
 public class SupervisorRoute {
+  String clientOrigin = System.getProperty("CLIENT_ADDR");
+
   // Get all supervisors
   @GetMapping
-  @CrossOrigin(origins = "http://localhost:3000")
+  @CrossOrigin(origins = "http://localhost:9001")
   public ResponseEntity<?> getSupervisors() {
     RestTemplate restTemplate = new RestTemplate();
 
@@ -38,7 +39,7 @@ public class SupervisorRoute {
   // Filter and sort supervisors
   // Filter out numerical jurisdictions and sort by jurisdiction and name
   @RequestMapping(path = "/supervisors")
-  @CrossOrigin(origins = "http://localhost:3000")
+  @CrossOrigin(origins = "http://localhost:9001")
   public ResponseEntity<?> getSupervisorsSorted() {
     RestTemplate restTemplate = new RestTemplate();
 
@@ -102,10 +103,19 @@ public class SupervisorRoute {
 
   @RequestMapping(path = "/submit")
   @PostMapping
-  @CrossOrigin(origins = "http://localhost:3000")
-  // public ResponseEntity<?> submitNotification(@RequestBody String firstName, String lastName, String email, String phoneNumber, String supervisor) {
+  @CrossOrigin(origins = "http://localhost:9001")
   public ResponseEntity<?> submitNotification(@RequestBody SupervisorNotification notification) {
-    System.out.println(notification.getEmail() );
-    return new ResponseEntity<>("Okay", HttpStatus.BAD_REQUEST);
+    System.out.println("Notification request body:");
+    System.out.println(notification);
+
+    try {
+      if (notification.getFirstName() == "" || notification.getLastName() == "" || notification.getSupervisor() == "") {
+        throw new Exception("Must include first name, last name, and supervisor");
+      }
+
+      return new ResponseEntity<>("Submission accepted", HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<>("Notification submission not accepted", HttpStatus.BAD_REQUEST);
+    }
   }
 }

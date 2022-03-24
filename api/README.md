@@ -1,5 +1,3 @@
-# Overview
-This template provides a very basic Spring Boot application. This is intended to provide a bare minimum set of files that is executable, and can be compiled into a functional docker image.
 
 # Running locally with gradle
 gradle build

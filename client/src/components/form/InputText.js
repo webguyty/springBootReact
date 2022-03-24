@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { letters } from '../../utls/validation'
+import { letters } from '../../utils/validation'
 
 const InputText = ({label, nameText, id, formState, handleChange, cn, placeholder, setNotification}) => {
 

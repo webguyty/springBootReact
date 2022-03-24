@@ -6,7 +6,7 @@ import InputCheckText from './InputCheckText'
 import InputSelect from './InputSelect'
 import SubmitBtn from '../SubmitBtn'
 import Notification from '../Notification'
-import * as validation from '../../utls/validation'
+import * as validation from '../../utils/validation'
 
 const Form = () => {
   const defaultSupervisor = 'Select...'
@@ -44,7 +44,7 @@ const Form = () => {
     }
   }
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
 
     // 
@@ -77,9 +77,9 @@ const Form = () => {
 
     // Make sure a valid phone number if that is preference
     if (formState.isPhone) {
-      if (!validation.email(formState.phone)) {
+      if (!validation.phone(formState.phone)) {
         setNotification(prevState => ({...prevState,
-          message: 'Phone number must be 10 digits',
+          message: 'Phone number must be valid',
           display: true,
           timer: true,
           isError: true
@@ -112,10 +112,7 @@ const Form = () => {
       return
     }
 
-    
-    // 
-    // Succesful Submission
-    // 
+    // Succesful Validation
     
     // Configure body properties for post request
     const properties = {
@@ -125,28 +122,47 @@ const Form = () => {
       phoneNumber: formState.isPhone ? formState.phone : null,
       supervisor: formState.supervisor
     }
-  
 
-    setNotification(prevState => ({...prevState,
-      message: 'Thank you for filling out the notification form!',
-      display: true,
-      timer: true,
-      isError: false
-    }))
-
-    // Clear form state after 3 seconds
-    setTimeout(() => {
-      setFormState({
-          fname: '',
-          lname: '',
-          email: '',
-          phone: '',
-          isEmail: false,
-          isPhone: false,
-          supervisor: defaultSupervisor
-        })
-    }, 3000);
-
+    // Handle post request
+    try {
+      let response = await fetch(`${config.baseAPIurl}/api/submit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(properties)
+      })
+      
+      if(response.ok) {
+        setNotification(prevState => ({...prevState,
+          message: 'Thank you for filling out the notification form!',
+          display: true,
+          timer: true,
+          isError: false
+        }))
+    
+        // Clear form state after 3 seconds
+        setTimeout(() => {
+          setFormState({
+              fname: '',
+              lname: '',
+              email: '',
+              phone: '',
+              isEmail: false,
+              isPhone: false,
+              supervisor: defaultSupervisor
+            })
+        }, 3000);
+      }
+    } catch (error) {
+      console.log(error);
+      setNotification(prevState => ({...prevState,
+        message: 'Submission not accepted',
+        display: true,
+        timer: true,
+        isError: true
+      }))
+    }
   }
 
   // Get supervisors when page loads
@@ -156,7 +172,6 @@ const Form = () => {
       let data = await res.json()
       setSupervisorList([defaultSupervisor, ...data])
     }
-
     try {
       getSups()
     } catch (error) {
