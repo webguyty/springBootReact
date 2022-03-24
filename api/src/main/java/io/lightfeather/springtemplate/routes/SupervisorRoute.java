@@ -1,5 +1,7 @@
-package io.lightfeather.springtemplate;
+package io.lightfeather.springtemplate.routes;
 import io.lightfeather.springtemplate.models.Supervisor;
+import io.lightfeather.springtemplate.models.SupervisorNotification;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +20,7 @@ import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping(path = "/api")
-public class SupervisorService {
+public class SupervisorRoute {
   // Get all supervisors
   @GetMapping
   @CrossOrigin(origins = "http://localhost:3000")
@@ -101,8 +103,9 @@ public class SupervisorService {
   @RequestMapping(path = "/submit")
   @PostMapping
   @CrossOrigin(origins = "http://localhost:3000")
-  public ResponseEntity<?> submitNotification(@RequestBody String firstName, String lastName, String email, String phoneNumber, String supervisor) {
-    System.out.println(firstName + lastName + email + phoneNumber + supervisor);
+  // public ResponseEntity<?> submitNotification(@RequestBody String firstName, String lastName, String email, String phoneNumber, String supervisor) {
+  public ResponseEntity<?> submitNotification(@RequestBody SupervisorNotification notification) {
+    System.out.println(notification.getEmail() );
     return new ResponseEntity<>("Okay", HttpStatus.BAD_REQUEST);
   }
 }

@@ -1,36 +1,33 @@
 package io.lightfeather.springtemplate.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Supervisor {
-  private String id;
+public class SupervisorNotification {
+  private String email;
   private String phone;
   private String jurisdiction;
-  private String identificationNumber;
   private String firstName;
   private String lastName;
  
-  public Supervisor() {
+  public SupervisorNotification() {
 
   }
   
-  public Supervisor(String id, String phone, String jurisdiction, String identificationNumber, String firstName, String lastName) {
-    this.id = id;
+  public SupervisorNotification(String email, String phone, String jurisdiction, String firstName, String lastName) {
+    this.email = email;
     this.phone = phone;
     this.jurisdiction = jurisdiction;
-    this.identificationNumber = identificationNumber;
     this.firstName = firstName;
     this.lastName = lastName;
   }
 
-  public String getId() {
-    return id;
+  public String getEmail() {
+    return email;
   }
-  public void setId(String id) {
-    this.id = id;
+  public void getEmail(String email) {
+    this.email = email;
   }
-  
+
   public String getPhone() {
     return phone;
   }
@@ -43,13 +40,6 @@ public class Supervisor {
   }
   public void setJurisdiction(String jurisdiction) {
     this.jurisdiction = jurisdiction;
-  }
-
-  public String getIdentificationNumber() {
-    return identificationNumber;
-  }
-  public void setIdentificationNumber(String identificationNumber) {
-    this.identificationNumber = identificationNumber;
   }
 
   public String getFirstName() {
@@ -65,5 +55,4 @@ public class Supervisor {
   public void setLastName(String lastName) {
     this.lastName = lastName;
   }
-
 }
