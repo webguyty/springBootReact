@@ -112,15 +112,19 @@ const Form = () => {
       return
     }
 
-    // Delete uneeded fields from response
-    const properties = {...formState}
-    !properties.isEmail && delete properties.email
-    !properties.isPhone && delete properties.phone
-
+    
     // 
     // Succesful Submission
     // 
-
+    
+    // Configure body properties for post request
+    const properties = {
+      firstName: formState.fname,
+      lastName: formState.lname,
+      email: formState.isEmail ? formState.email : null,
+      phoneNumber: formState.isPhone ? formState.phone : null,
+      supervisor: formState.supervisor
+    }
   
 
     setNotification(prevState => ({...prevState,
